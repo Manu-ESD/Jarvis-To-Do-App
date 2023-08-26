@@ -1,6 +1,7 @@
 {
   "name": "userloginmodelone",
-  "homepage" : "https://github.com/Manu-ESD/Jarvis-To-Do-App.git",
+  "homepage" : "https://manu-esd.github.io/Jarvis-To-Do-App/",
+  // https://vaheedsk36.github.io/react-notes-app
   "version": "0.1.0",
   "private": true,
   "dependencies": {
