@@ -5,20 +5,17 @@ import {MdDeleteForever} from 'react-icons/md'
 
 const Taskcard = (props:any) => {
   //  const msg = new SpeechSynthesisUtterance();
-    console.log("DDDD");
-    const [taskComplete, settaskComplete] = useState(props.Tcomplete);
-    const [markComplete, setMarkComplete] = useState("text-white");
+    const [markComplete, setMarkComplete] = useState(props.Tcomplete ? "text-lime-500" : "text-white");
 
   useEffect(()=>{
-    console.log("taskComplete", taskComplete, props.Tid);
-    taskComplete?setMarkComplete("text-lime-500"):setMarkComplete("text-white");
-  },[props])
+    setMarkComplete(props.Tcomplete ? "text-lime-500" : "text-white");
+  },[props.Tcomplete])
 
   return (
     <div className="h-10 w-80 m-2 border-2 border-Ironman-red rounded-lg text-white flex items-center p-2 justify-between">
     {props.TName}
     <div className="flex">
-    <TiTickOutline className={`m-4 active:scale-125 ${markComplete} `} onClick={()=>{props.onComplete(props)}}/> 
+    <TiTickOutline className={`m-4 active:scale-125 ${markComplete} `} onClick={()=>{props.onComplete(props);}}/> 
     <MdDeleteForever className="m-4 active:scale-125 text-red-700" onClick={()=>{props.onDelete(props.Tid)}}/>
     </div>
     </div>

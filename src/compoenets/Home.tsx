@@ -26,16 +26,12 @@ const Home = () => {
     window.speechSynthesis.speak(msg);
 
     setpopup("z-50");
-
-    //creating code to add new task with task state
-
-
   };
 
   function Plusbutton(e:any) {
     e.preventDefault();
 
-    msg.text = "Hi Tony Stark! I have added" + newTaskPLUS +",to Task List";
+    msg.text = "Okay Boss! I have added" + newTaskPLUS +",to Task List";
     msg.onend =function() {
       console.log("boom boom");
     }
@@ -54,13 +50,28 @@ const Home = () => {
   }
 
   function onComplete (value:any){
-    var changetasklist = TaskList;
-    changetasklist[value.Tid-1].complete = !TaskList[value.Tid-1].complete;
-    setTaskList(changetasklist);
-    console.log("changetasklist", TaskList);
+    // var changetasklist = TaskList;
+    // changetasklist[value.Tid-1].complete = !TaskList[value.Tid-1].complete;
+    // setTaskList(changetasklist);
+    // console.log("changetasklist", TaskList);
+    msg.text = "Congratulations Boss! I have Marked Task Completed.";
+    msg.onend =function() {
+      console.log("boom boom");
+    }
+    window.speechSynthesis.speak(msg);
+    setTaskList((prevTaskList) => {
+      const updatedTaskList = [...prevTaskList];
+      updatedTaskList[value.Tid-1].complete =!updatedTaskList[value.Tid -1].complete;
+      return updatedTaskList;
+    })
   }
 
   const onDelete = (value:any)=>{
+    msg.text = "Okay Boss! I have Deleted this Task.";
+    msg.onend =function() {
+      console.log("boom boom");
+    }
+    window.speechSynthesis.speak(msg);
     alert("Deleting Task"+ value);
     console.log(TaskList);
     setTaskList(TaskList.filter((item) => item.id !== value));
@@ -73,7 +84,6 @@ const Home = () => {
       console.log("boom boom");
     }
     window.speechSynthesis.speak(msg);
-
     toroot("/");
   }
 
@@ -106,11 +116,11 @@ const Home = () => {
             <input type="text" value={newTaskPLUS} onChange={(event:any) => setnewTaskPLUS(event.target.value)} placeholder='Task' className=" m-1 p-2 h-8"></input>
             <label className=" font-bold m-1  ">Select Category</label>
             <div>
-            <input type="radio" name="category" value="professional" onClick={(event:any) => setCategoryPLUS(event.target.value)}></input>
+            <input type="radio" name="category" value="professional" className="scale-125 m-2" onClick={(event:any) => setCategoryPLUS(event.target.value)}></input>
             <label>Professional</label>
             </div>
            <div>
-           <input type="radio" name="category" value="personal" onClick={() => setCategoryPLUS("personal")}></input>
+           <input type="radio" name="category" value="personal" className="scale-125 m-2" onClick={() => setCategoryPLUS("personal")}></input>
             <label>Personal</label>
            </div>
             <button onClick={Plusbutton} className='font-bold bg-Ironman-gold border-4 border-Ironman-red rounded-full p-2 cursor-pointer w-10 top-[320px] left-[750px] absolute hover:scale-110 active:translate-y-2'><GrAdd></GrAdd></button>
@@ -122,7 +132,7 @@ const Home = () => {
               {TaskList.map((item)=>{
                   console.log("MAP called")
                   if(item.type === "professional"){
-                    return <Taskcard key = {item.id} TName = {item.Task} Tcomplete = {item.complete} Tid = {item.id}  onComplete={onComplete} onDelete={onDelete}></Taskcard>
+                    return <Taskcard key = {item.id} TName = {item.Task} Tcomplete = {item.complete} Tid = {item.id}  onComplete={onComplete} onDelete={onDelete}/>
                   }
                 
               })}
@@ -132,7 +142,7 @@ const Home = () => {
                 <h5 className=' text-Ironman-gold'>Personal Task List</h5>
                 {TaskList.map((item)=>{
                   if(item.type === "personal"){
-                    return <Taskcard key = {item.id} TName = {item.Task} Tcomplete = {item.complete} Tid = {item.id} onComplete={onComplete} onDelete={onDelete}></Taskcard>
+                    return <Taskcard key = {item.id} TName = {item.Task} Tcomplete = {item.complete} Tid = {item.id} onComplete={onComplete} onDelete={onDelete}/>
                   }
               })}
         </div>
